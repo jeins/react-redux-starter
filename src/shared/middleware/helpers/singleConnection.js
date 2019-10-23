@@ -10,14 +10,14 @@ import {
   forOwn,
   replace,
 } from 'lodash';
+import { createError } from 'shared/utils/actions/errorActions';
+import { METHOD_POST, METHOD_PATCH, METHOD_PUT } from 'shared/constants/httpMethod';
 import {
   callAPI,
   normalizeErrorsFromBody,
   phraseErrorsAsSingleMessage,
   mergeRequestAndResponseEntities,
-} from 'shared/utils/api';
-import { createError } from 'shared/actions/errorActions';
-import { METHOD_POST, METHOD_PATCH, METHOD_PUT } from 'shared/constants/httpMethod';
+} from './index';
 
 function normalizeActionTypes(types) {
   if (!Array.isArray(types) || types.length !== 3) {
@@ -79,7 +79,7 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
 
   let { endpoint } = apiAction;
   const {
-    method, params, multipart, handledStatusCodes, download,
+    method, params, actionParams, multipart, handledStatusCodes, download,
   } = apiAction;
 
   endpoint = normalizeEndpoint(store, endpoint);
@@ -97,6 +97,9 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
       ...endpoint.params,
       body: params,
     },
+    ...(actionParams && Object.keys(actionParams).length && {
+      params: actionParams,
+    }),
   }));
 
   function failureActionFromResponse(failureAction, statusCode, errors, endpointParams) {
@@ -107,6 +110,9 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
         statusCode,
         ...endpointParams,
       },
+      ...(actionParams && Object.keys(actionParams).length && {
+        params: actionParams,
+      }),
     });
   }
 
@@ -141,6 +147,9 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
         ...response,
         body,
       },
+      ...(actionParams && Object.keys(actionParams).length && {
+        params: actionParams,
+      }),
     })));
   }
 

@@ -10,6 +10,12 @@ const devWebpackConfig = deepExtend(webpackConfig, {
     publicPath: '/',
     contentBase: './public',
     hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9001',
+        secure: false,
+      },
+    },
   },
 });
 

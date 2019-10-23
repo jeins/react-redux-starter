@@ -1,11 +1,11 @@
 import { get, isString, forOwn } from 'lodash';
 import queryString from 'query-string';
+import url from 'url';
 import { NO_CONTENT } from 'http-status-codes';
 import { METHOD_GET } from 'shared/constants/httpMethod';
-import url from 'url';
 
+const TOKEN_KEY = 'X-Heaven-Token';
 const UNKNOWN_ERROR = 'Unknown API error occurred';
-
 const ERRORS_MAP = {
   'download.document.zip.no.records.found': 'No absence documents found',
 };
@@ -25,7 +25,7 @@ export async function callAPI({
     let headers = {};
     if (authToken !== null) {
       headers = {
-        'X-Heaven-Token': authToken,
+        [TOKEN_KEY]: authToken,
       };
     }
 

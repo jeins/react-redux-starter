@@ -11,12 +11,12 @@ import {
   forOwn,
   replace,
 } from 'lodash';
+import { createError } from 'shared/utils/actions/errorActions';
+import { METHOD_GET } from 'shared/constants/httpMethod';
 import {
   callAPI,
   phraseErrorsAsSingleMessage,
-} from 'shared/utils/api';
-import { createError } from 'shared/actions/errorActions';
-import { METHOD_GET } from 'shared/constants/httpMethod';
+} from './index';
 
 function normalizeActionTypes(types) {
   if (!Array.isArray(types) || types.length !== 3) {

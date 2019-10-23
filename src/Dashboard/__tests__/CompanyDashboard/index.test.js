@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CompanyDashboard from '../../containers/CompanyDashboard';
+import UserList from '../../components/UserList';
 
 describe('Examining the syntax of Jest tests', () => {
   it('sums numbers', () => {
@@ -9,7 +9,7 @@ describe('Examining the syntax of Jest tests', () => {
     expect(2 + 2).toEqual(4);
   });
 
-  it('renders CompanyDashboard', () => {
-    shallow(<CompanyDashboard />);
+  it('renders UserList', () => {
+    shallow(<UserList />);
   });
 });

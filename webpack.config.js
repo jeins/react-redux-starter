@@ -1,5 +1,3 @@
-'use strict';
-
 import webpack from 'webpack';
 import path from 'path';
 
@@ -7,7 +5,7 @@ export default {
   devtool: 'inline-source-map',
   entry: [
     'webpack/hot/dev-server',
-    './src/index.js'
+    './src/index.js',
   ],
   output: {
     filename: 'app.js',
@@ -22,13 +20,13 @@ export default {
       },
       {
         test: /\.(png|jpg|svg)$/,
-        loader: 'url-loader?limit=8192'
-      }
+        loader: 'url-loader?limit=8192',
+      },
     ],
   },
   externals: {
     'react/lib/ExecutionEnvironment': true,
-    'react/lib/ReactContext': 'window'
+    'react/lib/ReactContext': 'window',
   },
   resolve: {
     alias: {
@@ -37,9 +35,9 @@ export default {
       'public': path.resolve('./public'),
     },
     modules: [path.resolve('./src'), 'node_modules'],
-    extensions : ['.js', '.ts', '.scss']
+    extensions: ['.js', '.ts', '.scss'],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };

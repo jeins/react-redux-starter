@@ -1,15 +1,13 @@
-import { createAPIPollingMiddleware } from '../common';
-import { loadDeploymentConfiguration } from '../config/deployment';
+import heavenAPIPollingMiddleware from './heavenAPIPolling';
 
 export const HEAVEN_API_POLLING = 'HEAVEN_API_POLLING';
 
-export default createAPIPollingMiddleware({
+export default heavenAPIPollingMiddleware({
 
   actionKey: HEAVEN_API_POLLING,
 
   async apiRoot() {
-    const { API_ROOT } = await loadDeploymentConfiguration();
-    return API_ROOT;
+    return '/';
   },
 
 });

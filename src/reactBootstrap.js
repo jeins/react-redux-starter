@@ -2,16 +2,18 @@ import '@babel/polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
-
 import { Provider } from 'react-redux';
 import {
-  createStore, combineReducers, applyMiddleware, compose,
+  createStore,
+  combineReducers,
+  applyMiddleware,
+  compose,
 } from 'redux';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { useHistory } from 'react-router-dom';
 
-import { reducers } from 'shared/reducers';
+import reducers from 'shared/reducers';
+import middlewares from 'shared/middleware';
 import CommonRouting from 'shared/routing/CommonRouting';
 
 const ROOT_NODE = document.getElementById('app');
@@ -25,7 +27,7 @@ async function init() {
   const appStore = createStore(
     appReducers,
     compose(
-      applyMiddleware(routerMiddleware(useHistory), thunk),
+      applyMiddleware(routerMiddleware(useHistory), ...middlewares),
       // eslint-disable-next-line no-underscore-dangle
       window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
     ),
@@ -33,7 +35,7 @@ async function init() {
 
   ReactDOM.render((
     <Provider store={appStore}>
-      {CommonRouting()}
+      <CommonRouting />
     </Provider>
   ), ROOT_NODE);
 }

@@ -5,7 +5,7 @@ export default {
   devtool: 'inline-source-map',
   entry: [
     'webpack/hot/dev-server',
-    './src/index.js',
+    './src/reactBootstrap.js',
   ],
   output: {
     filename: 'app.js',
@@ -31,8 +31,8 @@ export default {
   resolve: {
     alias: {
       sinon: 'sinon/pkg/sinon.js', // https://github.com/webpack/webpack/issues/177#issuecomment-185718237,
-      'src': path.resolve('./src'),
-      'public': path.resolve('./public'),
+      src: path.resolve('./src'),
+      public: path.resolve('./public'),
     },
     modules: [path.resolve('./src'), 'node_modules'],
     extensions: ['.js', '.ts', '.scss'],

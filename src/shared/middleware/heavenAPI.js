@@ -1,15 +1,23 @@
 import 'whatwg-fetch';
 import { isFSA } from 'flux-standard-action';
-import {includes, merge, isString, isFunction, isObject, forOwn, replace} from 'lodash';
-import {createError} from '../actions/errorActions';
+import saveAs from 'file-saver';
+import {
+  includes,
+  merge,
+  isString,
+  isFunction,
+  isObject,
+  forOwn,
+  replace,
+} from 'lodash';
 import {
   callAPI,
   normalizeErrorsFromBody,
   phraseErrorsAsSingleMessage,
-,mergeRequestAndResponseEntities} from '../utils/api';
-
-import { METHOD_POST, METHOD_PATCH, METHOD_PUT } from '../config/constants';
-import saveAs from 'file-saver';
+  mergeRequestAndResponseEntities,
+} from 'shared/utils/api';
+import { createError } from 'shared/actions/errorActions';
+import { METHOD_POST, METHOD_PATCH, METHOD_PUT } from 'shared/constants/httpMethod';
 
 function normalizeActionTypes(types) {
   if (!Array.isArray(types) || types.length !== 3) {
@@ -56,7 +64,7 @@ function normalizeEndpoint(store, endpoint) {
     throw new Error('Specify a path string in endpoint object.');
   }
 
-  endpoint = { params: {}, ...endpoint};
+  endpoint = { params: {}, ...endpoint };
   endpoint.path = interpolateUrl(endpoint.path, endpoint.params);
 
   return endpoint;
@@ -70,7 +78,9 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
   }
 
   let { endpoint } = apiAction;
-  const { method, params, multipart, handledStatusCodes, download } = apiAction;
+  const {
+    method, params, multipart, handledStatusCodes, download,
+  } = apiAction;
 
   endpoint = normalizeEndpoint(store, endpoint);
 
@@ -101,9 +111,12 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
   }
 
   function dispatchError(response) {
-    const {body} = response;
+    const { body } = response;
     const errors = normalizeErrorsFromBody(body);
-    const errorActions = [failureActionFromResponse(failureType, response.statusCode, errors, endpoint.params)];
+    const errorActions = [
+      failureActionFromResponse(failureType, response.statusCode, errors, endpoint.params),
+    ];
+
     if (!includes(handledStatusCodes, response.statusCode)) {
       errorActions.push(createError(phraseErrorsAsSingleMessage(errors)));
     }
@@ -111,7 +124,7 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
   }
 
   function dispatchSuccess(response) {
-    let {body} = response;
+    let { body } = response;
 
     if (download && requestType.meta && requestType.meta.docType) {
       const file = new File([response.body.blob], `datev-export-${requestType.meta.docType}.txt`, { type: 'text/plain;charset=ISO-8859-1' });

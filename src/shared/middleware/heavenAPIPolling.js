@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+
 import 'whatwg-fetch';
 import { isFSA } from 'flux-standard-action';
 import {
@@ -9,11 +11,12 @@ import {
   forOwn,
   replace,
 } from 'lodash';
-import { createError } from '../actions/errorActions';
 import {
   callAPI,
   phraseErrorsAsSingleMessage,
-} from '../utils/api';
+} from 'shared/utils/api';
+import { createError } from 'shared/actions/errorActions';
+import { METHOD_GET } from 'shared/constants/httpMethod';
 
 function normalizeActionTypes(types) {
   if (!Array.isArray(types) || types.length !== 3) {
@@ -214,7 +217,7 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
         pollResponse = await callAPI({
           apiRoot: await apiRoot(),
           endpoint: endpoint.path + pollId,
-          method: 'GET',
+          method: METHOD_GET,
           params: {},
           authToken: store.getState().auth ? store.getState().auth.token : null,
         });
@@ -236,7 +239,6 @@ export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) =
       return dispatchError(response);
     }
   } catch (errorResponse) {
-    console.log('Error:\t', errorResponse);
     return dispatchError(errorResponse);
   }
 };

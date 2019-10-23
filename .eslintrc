@@ -10,7 +10,7 @@
   "settings": {
     "import/resolver": {
       "babel-module": {
-        "root": "./js/src"
+        "root": "./src"
       }
     }
   },

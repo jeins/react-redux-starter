@@ -6,7 +6,7 @@ import { CompanyRoutes as DashboardCompanyRoutes } from 'Dashboard/routes';
 const CompanyPageRouter = () => (
   <Router>
     <Switch>
-        <DashboardCompanyRoutes />
+      <DashboardCompanyRoutes />
     </Switch>
   </Router>
 );

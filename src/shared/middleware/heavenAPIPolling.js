@@ -44,7 +44,7 @@ function interpolateUrl(path, params) {
 function normalizeEndpoint(store, endpoint) {
   if (isFunction(endpoint)) {
     endpoint = {
-      path: endpoint(store.getState())
+      path: endpoint(store.getState()),
     };
   } else if (isString(endpoint)) {
     endpoint = {
@@ -60,7 +60,7 @@ function normalizeEndpoint(store, endpoint) {
     throw new Error('Specify a path string in endpoint object.');
   }
 
-  endpoint = Object.assign({}, { params: {} }, endpoint);
+  endpoint = { params: {}, ...endpoint };
   endpoint.path = interpolateUrl(endpoint.path, endpoint.params);
 
   return endpoint;
@@ -96,7 +96,7 @@ const normalizeErrorsFromBody = (response) => {
   return result;
 };
 
-export default ({ actionKey, apiRoot }) => store => next => async (action) => {
+export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) => {
   const apiAction = action[actionKey];
   if (typeof apiAction === 'undefined') {
     return next(action);
@@ -203,7 +203,7 @@ export default ({ actionKey, apiRoot }) => store => next => async (action) => {
       params,
       multipart,
       download,
-      authToken: store.getState().auth ? store.getState().auth.token : null
+      authToken: store.getState().auth ? store.getState().auth.token : null,
     });
 
     if (response.statusCode === 200 || response.statusCode === 202 || response.statusCode === 204) {
@@ -216,7 +216,7 @@ export default ({ actionKey, apiRoot }) => store => next => async (action) => {
           endpoint: endpoint.path + pollId,
           method: 'GET',
           params: {},
-          authToken: store.getState().auth ? store.getState().auth.token : null
+          authToken: store.getState().auth ? store.getState().auth.token : null,
         });
 
         if (pollResponse.statusCode >= 400) {

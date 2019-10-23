@@ -1,14 +1,14 @@
 import 'whatwg-fetch';
-import {isFSA} from 'flux-standard-action';
-import {createError} from '../actions/errorActions';
+import { isFSA } from 'flux-standard-action';
 import {includes, merge, isString, isFunction, isObject, forOwn, replace} from 'lodash';
+import {createError} from '../actions/errorActions';
 import {
   callAPI,
   normalizeErrorsFromBody,
-  phraseErrorsAsSingleMessage
-} from '../utils/api';
-import {mergeRequestAndResponseEntities} from '../utils/api';
-import {METHOD_POST, METHOD_PATCH, METHOD_PUT} from '../config/constants';
+  phraseErrorsAsSingleMessage,
+,mergeRequestAndResponseEntities} from '../utils/api';
+
+import { METHOD_POST, METHOD_PATCH, METHOD_PUT } from '../config/constants';
 import saveAs from 'file-saver';
 
 function normalizeActionTypes(types) {
@@ -22,7 +22,7 @@ function normalizeActionTypes(types) {
     }
 
     if (isString(type)) {
-      return {type};
+      return { type };
     }
 
     throw new Error('Expected action types to be strings or FSA objects.');
@@ -40,11 +40,11 @@ function interpolateUrl(path, params) {
 function normalizeEndpoint(store, endpoint) {
   if (isFunction(endpoint)) {
     endpoint = {
-      path: endpoint(store.getState())
+      path: endpoint(store.getState()),
     };
   } else if (isString(endpoint)) {
     endpoint = {
-      path: endpoint
+      path: endpoint,
     };
   }
 
@@ -56,13 +56,13 @@ function normalizeEndpoint(store, endpoint) {
     throw new Error('Specify a path string in endpoint object.');
   }
 
-  endpoint = Object.assign({}, {params: {}}, endpoint);
+  endpoint = { params: {}, ...endpoint};
   endpoint.path = interpolateUrl(endpoint.path, endpoint.params);
 
   return endpoint;
 }
 
-export default ({actionKey, apiRoot}) => store => next => async action => {
+export default ({ actionKey, apiRoot }) => (store) => (next) => async (action) => {
   const apiAction = action[actionKey];
 
   if (typeof apiAction === 'undefined') {
@@ -70,11 +70,11 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
   }
 
   let { endpoint } = apiAction;
-  const {method, params, multipart, handledStatusCodes, download} = apiAction;
+  const { method, params, multipart, handledStatusCodes, download } = apiAction;
 
   endpoint = normalizeEndpoint(store, endpoint);
 
-  const [ requestType, successType, failureType ] = normalizeActionTypes(apiAction.types);
+  const [requestType, successType, failureType] = normalizeActionTypes(apiAction.types);
 
   function actionWith(data) {
     const finalAction = merge({}, data, action);
@@ -85,8 +85,8 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
     ...requestType,
     payload: {
       ...endpoint.params,
-      body: params
-    }
+      body: params,
+    },
   }));
 
   function failureActionFromResponse(failureAction, statusCode, errors, endpointParams) {
@@ -95,13 +95,13 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
       payload: {
         errors,
         statusCode,
-        ...endpointParams
-      }
+        ...endpointParams,
+      },
     });
   }
 
   function dispatchError(response) {
-    let body = response.body;
+    const {body} = response;
     const errors = normalizeErrorsFromBody(body);
     const errorActions = [failureActionFromResponse(failureType, response.statusCode, errors, endpoint.params)];
     if (!includes(handledStatusCodes, response.statusCode)) {
@@ -111,10 +111,10 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
   }
 
   function dispatchSuccess(response) {
-    let body = response.body;
+    let {body} = response;
 
     if (download && requestType.meta && requestType.meta.docType) {
-      const file = new File([response.body.blob], `datev-export-${requestType.meta.docType}.txt`, {type: 'text/plain;charset=ISO-8859-1'});
+      const file = new File([response.body.blob], `datev-export-${requestType.meta.docType}.txt`, { type: 'text/plain;charset=ISO-8859-1' });
       saveAs(file);
     }
 
@@ -126,8 +126,8 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
       payload: {
         ...endpoint.params,
         ...response,
-        body
-      }
+        body,
+      },
     })));
   }
 
@@ -139,7 +139,7 @@ export default ({actionKey, apiRoot}) => store => next => async action => {
       params,
       multipart,
       download,
-      authToken: store.getState().auth ? store.getState().auth.token : null
+      authToken: store.getState().auth ? store.getState().auth.token : null,
     });
     if (response.statusCode >= 400) {
       return dispatchError(response);

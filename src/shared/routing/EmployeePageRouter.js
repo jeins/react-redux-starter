@@ -6,7 +6,7 @@ import { EmployeeRoutes as DashboardEmployeeRoutes } from 'Dashboard/routes';
 const EmployeePageRouter = (contextProps = {}) => (
   <Router>
     <Switch>
-        <DashboardEmployeeRoutes />
+      <DashboardEmployeeRoutes />
     </Switch>
   </Router>
 );

@@ -36,7 +36,7 @@ async function init() {
     <App
       store={appStore}
       currentUserData={{
-        scope: 'COMPANY',
+        scope: 'COMPANY', // TODO call parse value from auth service
       }} />
   ), ROOT_NODE);
 }

@@ -2,7 +2,6 @@ import '@babel/polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import {
   createStore,
   combineReducers,
@@ -14,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 
 import reducers from 'shared/reducers';
 import middlewares from 'shared/middleware';
-import CommonRouting from 'shared/routing/CommonRouting';
+import App from './App';
 
 const ROOT_NODE = document.getElementById('app');
 
@@ -34,9 +33,11 @@ async function init() {
   );
 
   ReactDOM.render((
-    <Provider store={appStore}>
-      <CommonRouting />
-    </Provider>
+    <App
+      store={appStore}
+      currentUserData={{
+        scope: 'COMPANY',
+      }} />
   ), ROOT_NODE);
 }
 

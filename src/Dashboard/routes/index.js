@@ -8,7 +8,6 @@ import CompanyDashboard from 'Dashboard/containers/CompanyDashboard';
 import {
   COMPANY_ROOT_PATH,
   EMPLOYEE_ROOT_PATH,
-  COMPANY_SETTINGS_ROOT_PATH,
 } from './constants';
 
 export const SettingsRoutes = () => {};

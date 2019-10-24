@@ -2,8 +2,10 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 
+// components
+import Layout from 'Layout';
 import Routes from 'shared/routing';
 
 // TODO: check auth and getting scope (user / admin)
@@ -14,7 +16,9 @@ const App = ({
 }) => (
   <Provider store={store}>
     <Router history={createBrowserHistory()}>
-      <Routes currentUserData={currentUserData} />
+      <Layout currentUserData={currentUserData}>
+        <Routes currentUserData={currentUserData} />
+      </Layout>
     </Router>
   </Provider>
 );

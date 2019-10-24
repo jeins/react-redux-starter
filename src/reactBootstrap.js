@@ -8,8 +8,8 @@ import {
   applyMiddleware,
   compose,
 } from 'redux';
+import { createBrowserHistory } from 'history';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
-import { useHistory } from 'react-router-dom';
 
 import reducers from 'shared/reducers';
 import middlewares from 'shared/middleware';
@@ -26,7 +26,7 @@ async function init() {
   const appStore = createStore(
     appReducers,
     compose(
-      applyMiddleware(routerMiddleware(useHistory), ...middlewares),
+      applyMiddleware(routerMiddleware(createBrowserHistory()), ...middlewares),
       // eslint-disable-next-line no-underscore-dangle
       window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
     ),

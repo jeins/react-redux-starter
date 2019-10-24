@@ -45,7 +45,11 @@ const routes = ({
 };
 
 routes.propTypes = {
-  currentUserData: PropTypes.shape().isRequired,
+  currentUserData: PropTypes.shape(),
+};
+
+routes.defaultProps = {
+  currentUserData: null,
 };
 
 export default routes;

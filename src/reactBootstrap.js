@@ -34,10 +34,7 @@ async function init() {
 
   ReactDOM.render((
     <App
-      store={appStore}
-      currentUserData={{
-        scope: 'COMPANY', // TODO call parse value from auth service
-      }} />
+      store={appStore} />
   ), ROOT_NODE);
 }
 

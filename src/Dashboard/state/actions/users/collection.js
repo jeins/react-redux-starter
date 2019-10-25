@@ -17,7 +17,7 @@ const fetch = ({
       COLLECTION_FETCH_SUCCESS,
       COLLECTION_FETCH_FAILURE,
     ],
-    endpoint: 'api/v1/users',
+    endpoint: 'api/users',
     method: METHOD_GET,
     params: { ...generatePaginationAndFilters(paginationAndFiltering) },
     actionParams: { componentId },

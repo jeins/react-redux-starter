@@ -12,8 +12,12 @@ const devWebpackConfig = deepExtend(webpackConfig, {
     hot: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:9001',
+        // target: 'http://localhost:9001', // json-server mocks data services
+        target: 'http://192.168.30.37:8080',
         secure: false,
+        pathRewrite: {
+          '/api': '/',
+        },
       },
     },
   },

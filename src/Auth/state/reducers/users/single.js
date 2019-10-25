@@ -11,21 +11,10 @@ import {
   SINGLE_FETCH,
   SINGLE_FETCH_SUCCESS,
   SINGLE_FETCH_FAILURE,
-
-  SINGLE_UPDATE,
-  SINGLE_UPDATE_SUCCESS,
-  SINGLE_UPDATE_FAILURE,
-
-  SINGLE_DELETE,
-  SINGLE_DELETE_SUCCESS,
-  SINGLE_DELETE_FAILURE,
-} from 'Dashboard/state/actions/users/types';
+} from 'Auth/state/actions/users/types';
 import { ROOT, SINGLE as IDENTIFIER } from './constants';
 
 export const generateEntryData = () => ({
-  isDeleted: false,
-  isUpdated: false,
-  isCreated: false,
   fetching: false,
   data: {},
   errors: generateEmptyErrors(),
@@ -64,6 +53,7 @@ export const HANDLERS = {
   [SINGLE_CREATE_SUCCESS]: (state, action) => {
     const { componentId: entityId } = action.params;
     const theState = state[ROOT][IDENTIFIER];
+    const responseData = action.payload.body.data;
 
     if (!theState[entityId]) {
       theState[entityId] = generateEntryData();
@@ -71,7 +61,7 @@ export const HANDLERS = {
 
     const theEntity = cloneDeep(theState[entityId]);
     theEntity.fetching = false;
-    theEntity.isCreated = true;
+    theEntity.data = responseData;
 
     return {
       ...state,
@@ -95,7 +85,6 @@ export const HANDLERS = {
 
     const theEntity = cloneDeep(theState[entityId]);
     theEntity.fetching = false;
-    theEntity.isCreated = false;
     theEntity.errors = handleApiErrors(action.payload);
 
     return {
@@ -139,7 +128,7 @@ export const HANDLERS = {
   [SINGLE_FETCH_SUCCESS]: (state, action) => {
     const { id: entityId } = action.params;
     const theState = state[ROOT][IDENTIFIER];
-    const responseData = action.payload.body.data[0];
+    const responseData = action.payload.body.data;
 
     if (!theState[entityId]) {
       theState[entityId] = generateEntryData();
@@ -164,159 +153,6 @@ export const HANDLERS = {
 
   [SINGLE_FETCH_FAILURE]: (state, action) => {
     const { id: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.errors = handleApiErrors(action.payload);
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  // Updating:
-  [SINGLE_UPDATE]: (state, action) => {
-    const { expenseId: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = true;
-    theEntity.errors = generateEmptyErrors();
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  [SINGLE_UPDATE_SUCCESS]: (state, action) => {
-    const { expenseId: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.isUpdated = true;
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  [SINGLE_UPDATE_FAILURE]: (state, action) => {
-    const { expenseId: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.isUpdated = false;
-    theEntity.errors = handleApiErrors(action.payload);
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  // Deleting:
-  [SINGLE_DELETE]: (state, action) => {
-    const { expenseId: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = true;
-    theEntity.errors = generateEmptyErrors();
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  [SINGLE_DELETE_SUCCESS]: (state, action) => {
-    const { expenseId: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
-
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
-    }
-
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.isDeleted = true;
-
-    return {
-      ...state,
-      [ROOT]: {
-        ...state[ROOT],
-        [IDENTIFIER]: {
-          ...theState,
-          [entityId]: theEntity,
-        },
-      },
-    };
-  },
-
-  [SINGLE_DELETE_FAILURE]: (state, action) => {
-    const { expenseId: entityId } = action.params;
     const theState = state[ROOT][IDENTIFIER];
 
     if (!theState[entityId]) {

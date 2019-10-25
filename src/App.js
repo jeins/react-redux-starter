@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 
 // components
-import Layout from 'Layout';
+import Layout from 'shared/components/Layout';
 import Routes from 'shared/routing';
 
 // TODO: check auth and getting scope (user / admin)

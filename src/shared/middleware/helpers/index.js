@@ -4,11 +4,11 @@ import url from 'url';
 import { NO_CONTENT } from 'http-status-codes';
 import { METHOD_GET } from 'shared/constants/httpMethod';
 
-const TOKEN_KEY = 'X-Heaven-Token';
-const UNKNOWN_ERROR = 'Unknown API error occurred';
-const ERRORS_MAP = {
-  'download.document.zip.no.records.found': 'No absence documents found',
-};
+import {
+  TOKEN_KEY,
+  UNKNOWN_ERROR,
+  ERRORS_MAP,
+} from '../constants';
 
 export async function callAPI({
   apiRoot, endpoint, method, params, multipart, download, authToken,

@@ -37,6 +37,6 @@ export const login = ({ componentId, email, password }) => ({
     endpoint: 'api/authorization/authenticate',
     method: METHOD_POST,
     params: { email, password },
-    actionParams: { id: componentId },
+    actionParams: {},
   },
 });

@@ -101,17 +101,14 @@ export const HANDLERS = {
 
   // Fetching:
   [SINGLE_FETCH]: (state, action) => {
-    const { id: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
+    let theState = state[ROOT][IDENTIFIER];
 
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
+    if (!theState) {
+      theState = generateEntryData();
     }
 
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = true;
-    theEntity.errors = generateEmptyErrors();
+    theState.fetching = true;
+    theState.errors = generateEmptyErrors();
 
     return {
       ...state,
@@ -119,25 +116,21 @@ export const HANDLERS = {
         ...state[ROOT],
         [IDENTIFIER]: {
           ...theState,
-          [entityId]: theEntity,
         },
       },
     };
   },
 
   [SINGLE_FETCH_SUCCESS]: (state, action) => {
-    const { id: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
+    let theState = state[ROOT][IDENTIFIER];
     const responseData = action.payload.body.data;
 
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
+    if (!theState) {
+      theState = generateEntryData();
     }
 
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.data = responseData;
+    theState.fetching = false;
+    theState.data = responseData;
 
     return {
       ...state,
@@ -145,24 +138,20 @@ export const HANDLERS = {
         ...state[ROOT],
         [IDENTIFIER]: {
           ...theState,
-          [entityId]: theEntity,
         },
       },
     };
   },
 
   [SINGLE_FETCH_FAILURE]: (state, action) => {
-    const { id: entityId } = action.params;
-    const theState = state[ROOT][IDENTIFIER];
+    let theState = state[ROOT][IDENTIFIER];
 
-    if (!theState[entityId]) {
-      theState[entityId] = generateEntryData();
+    if (!theState) {
+      theState = generateEntryData();
     }
 
-    const theEntity = cloneDeep(theState[entityId]);
-
-    theEntity.fetching = false;
-    theEntity.errors = handleApiErrors(action.payload);
+    theState.fetching = false;
+    theState.errors = handleApiErrors(action.payload);
 
     return {
       ...state,
@@ -170,7 +159,6 @@ export const HANDLERS = {
         ...state[ROOT],
         [IDENTIFIER]: {
           ...theState,
-          [entityId]: theEntity,
         },
       },
     };

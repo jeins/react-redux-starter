@@ -18,6 +18,7 @@ import {
 import { ROOT, SINGLE as IDENTIFIER } from './constants';
 
 export const generateEntryData = () => ({
+  isCreated: false,
   fetching: false,
   data: getCurrentUser() || {},
   errors: generateEmptyErrors(),
@@ -28,7 +29,7 @@ export const INITIAL_STATE = {
 };
 
 export const HANDLERS = {
-  // Creation:
+  // register:
   [SINGLE_CREATE]: (state, action) => {
     const { componentId: entityId } = action.params;
     const theState = state[ROOT][IDENTIFIER];
@@ -56,7 +57,6 @@ export const HANDLERS = {
   [SINGLE_CREATE_SUCCESS]: (state, action) => {
     const { componentId: entityId } = action.params;
     const theState = state[ROOT][IDENTIFIER];
-    const responseData = action.payload.body.data;
 
     if (!theState[entityId]) {
       theState[entityId] = generateEntryData();
@@ -64,7 +64,7 @@ export const HANDLERS = {
 
     const theEntity = cloneDeep(theState[entityId]);
     theEntity.fetching = false;
-    theEntity.data = responseData;
+    theEntity.isCreated = true;
 
     return {
       ...state,
@@ -102,7 +102,7 @@ export const HANDLERS = {
     };
   },
 
-  // Fetching:
+  // login:
   [LOGIN]: (state, action) => {
     let theState = state[ROOT][IDENTIFIER];
 
@@ -167,6 +167,7 @@ export const HANDLERS = {
     };
   },
 
+  // logout
   [PERFORM_LOGOUT]: (state, action) => {
     let theState = state[ROOT][IDENTIFIER];
 
@@ -174,6 +175,7 @@ export const HANDLERS = {
       theState = generateEntryData();
     }
 
+    theState.isCreated = false;
     theState.data = {};
 
     return {

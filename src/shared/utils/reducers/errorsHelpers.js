@@ -1,4 +1,4 @@
-import { has, isEqual } from 'lodash';
+import { has } from 'lodash';
 
 export const generateEmptyFormErrors = () => [];
 
@@ -8,10 +8,6 @@ export const generateEmptyErrors = () => ({
   formErrors: generateEmptyFormErrors(),
   fieldErrors: generateEmptyFieldErrors(),
 });
-
-export const entryIsErroneous = (entry) => entry.errors
-  && !isEqual(entry.errors, generateEmptyErrors());
-
 
 const mapApiErrors = (errors) => {
   const mappedErrors = {};

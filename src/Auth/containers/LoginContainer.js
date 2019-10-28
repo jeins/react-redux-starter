@@ -31,12 +31,10 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <>
-        <LoadingOverlay loading={this.authData.fetching}>
-          <LoginForm
-            onClickLogin={this.onClickLogin} />
-        </LoadingOverlay>
-      </>
+      <LoadingOverlay loading={this.authData.fetching}>
+        <LoginForm
+          onClickLogin={this.onClickLogin} />
+      </LoadingOverlay>
     );
   }
 }

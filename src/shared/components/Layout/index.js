@@ -9,7 +9,12 @@ import { push } from 'connected-react-router';
 import { logout as logoutAction } from 'Auth/state/actions/users/single';
 
 // components
-import { makeStyles, useTheme, createMuiTheme, StylesProvider } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  useTheme,
+  createMuiTheme,
+  StylesProvider,
+} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';

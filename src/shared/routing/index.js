@@ -14,7 +14,7 @@ import EmployeePageRouter from './EmployeePageRouter';
 const routes = ({
   currentUserData,
 }) => {
-  const scope = isEmpty(currentUserData) ? null : currentUserData.scope;
+  const scope = isEmpty(currentUserData) ? null : USAGE_COMPANY;//currentUserData.scope;
 
   const redirectRoute = () => {
     if (scope === USAGE_COMPANY) {

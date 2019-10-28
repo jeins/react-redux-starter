@@ -5,9 +5,11 @@ import {
   SINGLE_CREATE_SUCCESS,
   SINGLE_CREATE_FAILURE,
 
-  SINGLE_FETCH,
-  SINGLE_FETCH_SUCCESS,
-  SINGLE_FETCH_FAILURE,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+
+  PERFORM_LOGOUT,
 } from './types';
 
 export const register = ({
@@ -30,9 +32,9 @@ export const register = ({
 export const login = ({ componentId, email, password }) => ({
   [HEAVEN_API]: {
     types: [
-      SINGLE_FETCH,
-      SINGLE_FETCH_SUCCESS,
-      SINGLE_FETCH_FAILURE,
+      LOGIN,
+      LOGIN_SUCCESS,
+      LOGIN_FAILURE,
     ],
     endpoint: 'api/authorization/authenticate',
     method: METHOD_POST,
@@ -40,3 +42,5 @@ export const login = ({ componentId, email, password }) => ({
     actionParams: {},
   },
 });
+
+export const logout = () => ({ type: PERFORM_LOGOUT });

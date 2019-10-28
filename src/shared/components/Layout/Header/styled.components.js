@@ -14,6 +14,10 @@ export const Header = styled(AppBar)`
         display: none !important;
       }
     }
+
+    .headerTitle {
+      flex-grow: 1;
+    }
   `}
 `;
 

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { ThemeProvider } from 'styled-components';
+import { push } from 'connected-react-router';
+
+// actions
+import { logout as logoutAction } from 'Auth/state/actions/users/single';
 
 // components
 import { makeStyles, useTheme, createMuiTheme, StylesProvider } from '@material-ui/core/styles';
@@ -34,13 +39,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = ({ children, currentUserData }) => {
+const Layout = ({
+  children,
+  currentUserData,
+  logoutAction,
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const onLogout = () => {
+    logoutAction();
+    push('/');
   };
 
   return (
@@ -52,7 +66,9 @@ const Layout = ({ children, currentUserData }) => {
 
         { !isEmpty(currentUserData) && (
           <div className={classes.root}>
-            <Header handleDrawerToggle={handleDrawerToggle} />
+            <Header
+              handleDrawerToggle={handleDrawerToggle}
+              onLogout={onLogout} />
             <nav className={classes.drawer} aria-label="mailbox folders">
               <Hidden smUp implementation="css">
                 <Drawer
@@ -94,10 +110,19 @@ const Layout = ({ children, currentUserData }) => {
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   currentUserData: PropTypes.shape(),
+
+  logoutAction: PropTypes.func.isRequired,
 };
 
 Layout.defaultProps = {
   currentUserData: null,
 };
 
-export default Layout;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+  logoutAction,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

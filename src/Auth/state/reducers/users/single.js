@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { getCurrentUser } from 'shared/middleware/webStorage/helpers';
 import {
   generateEmptyErrors,
   handleApiErrors,
@@ -8,20 +9,22 @@ import {
   SINGLE_CREATE_SUCCESS,
   SINGLE_CREATE_FAILURE,
 
-  SINGLE_FETCH,
-  SINGLE_FETCH_SUCCESS,
-  SINGLE_FETCH_FAILURE,
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+
+  PERFORM_LOGOUT,
 } from 'Auth/state/actions/users/types';
 import { ROOT, SINGLE as IDENTIFIER } from './constants';
 
 export const generateEntryData = () => ({
   fetching: false,
-  data: {},
+  data: getCurrentUser() || {},
   errors: generateEmptyErrors(),
 });
 
 export const INITIAL_STATE = {
-  [IDENTIFIER]: {},
+  [IDENTIFIER]: generateEntryData(),
 };
 
 export const HANDLERS = {
@@ -100,7 +103,7 @@ export const HANDLERS = {
   },
 
   // Fetching:
-  [SINGLE_FETCH]: (state, action) => {
+  [LOGIN]: (state, action) => {
     let theState = state[ROOT][IDENTIFIER];
 
     if (!theState) {
@@ -121,7 +124,7 @@ export const HANDLERS = {
     };
   },
 
-  [SINGLE_FETCH_SUCCESS]: (state, action) => {
+  [LOGIN_SUCCESS]: (state, action) => {
     let theState = state[ROOT][IDENTIFIER];
     const responseData = action.payload.body.data;
 
@@ -143,7 +146,7 @@ export const HANDLERS = {
     };
   },
 
-  [SINGLE_FETCH_FAILURE]: (state, action) => {
+  [LOGIN_FAILURE]: (state, action) => {
     let theState = state[ROOT][IDENTIFIER];
 
     if (!theState) {
@@ -152,6 +155,26 @@ export const HANDLERS = {
 
     theState.fetching = false;
     theState.errors = handleApiErrors(action.payload);
+
+    return {
+      ...state,
+      [ROOT]: {
+        ...state[ROOT],
+        [IDENTIFIER]: {
+          ...theState,
+        },
+      },
+    };
+  },
+
+  [PERFORM_LOGOUT]: (state, action) => {
+    let theState = state[ROOT][IDENTIFIER];
+
+    if (!theState) {
+      theState = generateEntryData();
+    }
+
+    theState.data = {};
 
     return {
       ...state,

@@ -1,8 +1,8 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
 import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import history from 'shared/utils/history';
+import { ConnectedRouter } from 'connected-react-router';
 
 // components
 import Layout from 'shared/components/Layout';
@@ -12,25 +12,31 @@ import Routes from 'shared/routing';
 // parse to props
 const App = ({
   store,
-  currentUserData,
+  authData,
 }) => (
   <Provider store={store}>
-    <Router history={createBrowserHistory()}>
-      <Layout currentUserData={currentUserData}>
-        <Routes currentUserData={currentUserData} />
+    <ConnectedRouter history={history}>
+      <Layout currentUserData={authData.data}>
+        <Routes currentUserData={authData.data} />
       </Layout>
-    </Router>
+    </ConnectedRouter>
   </Provider>
 );
 
 App.propTypes = {
-  currentUserData: PropTypes.shape(),
-
   store: PropTypes.shape().isRequired,
+  authData: PropTypes.shape().isRequired,
 };
 
-App.defaultProps = {
-  currentUserData: null,
-};
+const mapStateToProps = ({
+  auth: {
+    users: { single },
+  },
+}) => ({
+  authData: single,
+});
 
-export default App;
+const mapDispatchToProps = {};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -29,7 +29,7 @@ export const register = ({
   },
 });
 
-export const login = ({ componentId, email, password }) => ({
+export const login = ({ email, password }) => ({
   [HEAVEN_API]: {
     types: [
       LOGIN,

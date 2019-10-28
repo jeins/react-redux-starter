@@ -13,6 +13,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import history from 'shared/utils/history';
 import reducers from 'shared/reducers';
 import middlewares from 'shared/middleware';
+import { loadTranslations } from 'shared/utils/translationsService';
 import App from './App';
 
 const ROOT_NODE = document.getElementById('app');
@@ -31,6 +32,8 @@ async function init() {
       window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
     ),
   );
+
+  await loadTranslations();
 
   ReactDOM.render((
     <App store={appStore} />

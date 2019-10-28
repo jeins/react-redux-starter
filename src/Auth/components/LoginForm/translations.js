@@ -6,5 +6,6 @@ export default {
     PASSWORD: `${AUTH_PAGE}.form.password`,
     SUBMIT: `${AUTH_PAGE}.form.submitButton`,
   },
-  REGISTER_TEXT: '',
+  REGISTER_TEXT: `${AUTH_PAGE}.registerText`,
+  FORGOT_PASSWORD_TEXT: `${AUTH_PAGE}.forgotPassword`,
 };

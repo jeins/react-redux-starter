@@ -7,7 +7,7 @@
     "start": "babel-node --max_old_space_size=3072 -- ./node_modules/.bin/webpack-dev-server --config ./webpack.config.dev.js --progress --colors",
     "test": "./node_modules/.bin/jest --config jest.config.json",
     "eslint:fix": "./node_modules/.bin/eslint --fix",
-    "start-server": "./node_modules/.bin/json-server --watch --port 9001 ./_mocksDataService/index.js --routes ./_mocksDataService/routes.json"
+    "start-server": "./node_modules/.bin/json-server --watch --port 9001 ./_mocksDataService/index.js"
   },
   "author": "",
   "license": "ISC",

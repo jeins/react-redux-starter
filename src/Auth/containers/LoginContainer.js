@@ -14,19 +14,19 @@ const COMPONENT_ID = 'AUTH_PAGE';
 
 class LoginContainer extends Component {
   onClickLogin = ({ email, password }) => {
-    const { componentId, loginAction } = this.props;
+    const { loginAction } = this.props;
 
     loginAction({
-      componentId,
       email,
       password,
     });
   }
 
   get authData() {
-    const { componentId, authProps } = this.props;
-    return isEmpty(authProps) || isEmpty(authProps[componentId])
-      ? generateEntryData() : authProps[componentId];
+    const { authProps } = this.props;
+  
+    return isEmpty(authProps)
+      ? generateEntryData() : authProps;
   }
 
   render() {

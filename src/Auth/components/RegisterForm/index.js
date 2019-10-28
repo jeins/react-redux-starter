@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'shared/utils/translationsService';
 
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -32,7 +33,7 @@ const RegisterForm = ({ onClickRegister }) => {
           required
           fullWidth
           id="companyName"
-          label={TRANSLATIONS.FORM.COMPANY_NAME}
+          label={translate(TRANSLATIONS.FORM.COMPANY_NAME)}
           value={registerValues.companyName}
           variant="outlined"
 
@@ -42,7 +43,7 @@ const RegisterForm = ({ onClickRegister }) => {
           required
           fullWidth
           id="email"
-          label={TRANSLATIONS.FORM.EMAIL}
+          label={translate(TRANSLATIONS.FORM.EMAIL)}
           value={registerValues.email}
           variant="outlined"
 
@@ -51,7 +52,7 @@ const RegisterForm = ({ onClickRegister }) => {
           required
           fullWidth
           id="password"
-          label={TRANSLATIONS.FORM.PASSWORD}
+          label={translate(TRANSLATIONS.FORM.PASSWORD)}
           value={registerValues.password}
           variant="outlined"
           type="password"
@@ -65,12 +66,12 @@ const RegisterForm = ({ onClickRegister }) => {
           color="primary"
 
           onClick={onSubmit}>
-          {TRANSLATIONS.FORM.SUBMIT}
+          {translate(TRANSLATIONS.FORM.SUBMIT)}
         </ButtonStyled>
         <Grid container>
           <Grid item>
             <Link href={LOGIN_ROOT_PATH} variant="body2">
-              {TRANSLATIONS.LOGIN_TEXT}
+              {translate(TRANSLATIONS.LOGIN_TEXT)}
             </Link>
           </Grid>
         </Grid>

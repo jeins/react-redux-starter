@@ -7,5 +7,5 @@ export default {
     PASSWORD: `${AUTH_PAGE}.form.password`,
     SUBMIT: `${AUTH_PAGE}.form.submitButton`,
   },
-  LOGIN_TEXT: '',
+  LOGIN_TEXT: `${AUTH_PAGE}.loginText`,
 };

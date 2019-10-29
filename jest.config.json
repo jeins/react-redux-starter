@@ -1,3 +1,5 @@
 {
-  "setupFilesAfterEnv": ["./src/setupTests.js"]
+  "setupFilesAfterEnv": ["./src/setupTests.js"],
+  "setupFiles": ["jest-localstorage-mock"],
+  "modulePaths": ["<rootDir>/src/"]
 }

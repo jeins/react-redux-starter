@@ -1,12 +1,12 @@
 import 'whatwg-fetch';
-import { setCurrentLocale, setLocalization, getLocalization } from './helpers';
+import {
+  LANGUAGE,
+  setCurrentLocale,
+  setLocalization,
+  getLocalization,
+} from './helpers';
 
-const LANGUAGE = {
-  en: 'en-GB',
-  de: 'de-DE',
-  fr: 'fr-FR',
-};
-const defaultLocale = LANGUAGE.en;
+export const defaultLocale = LANGUAGE.en;
 
 export const getLocaleFromLanguage = (language) => LANGUAGE[language] || defaultLocale;
 
@@ -17,7 +17,7 @@ export const translate = (key, params = {}) => {
 
   if (paramKeys.length > 0) {
     paramKeys.forEach((k) => {
-      localizedValue = localizedValue.replaceAll(k, params[k]);
+      localizedValue = localizedValue.replace(new RegExp(k, 'g'), params[k]);
     });
   }
 
@@ -26,7 +26,7 @@ export const translate = (key, params = {}) => {
 
 export async function loadTranslations(selectedLocale = defaultLocale) {
   const productBasedUrl = '/api/v1/localization/translations';
-  const translationUrl = 'api/translations';//`${productBasedUrl}/messages.${selectedLocale}.json`;
+  const translationUrl = `${productBasedUrl}/messages.${selectedLocale}.json`;
 
   const response = await fetch(translationUrl);
   const data = await response.json();

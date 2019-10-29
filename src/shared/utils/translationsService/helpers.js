@@ -2,6 +2,12 @@ const storage = sessionStorage;
 const LOCALIZATION_TOKEN_KEY = 'localization';
 const CURRENT_LOCALE = 'currentLang';
 
+export const LANGUAGE = {
+  en: 'en-GB',
+  de: 'de-DE',
+  fr: 'fr-FR',
+};
+
 export const setCurrentLocale = (lang) => {
   storage.setItem(CURRENT_LOCALE, lang);
 };
@@ -27,6 +33,6 @@ export const setLocalization = (lang, content) => {
   storage.setItem(LOCALIZATION_TOKEN_KEY, data);
 };
 
-export function clearAll() {
+export const clearAll = () => {
   storage.clear();
-}
+};

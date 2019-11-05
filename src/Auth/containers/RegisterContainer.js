@@ -40,7 +40,7 @@ const RegisterContainer = ({
 
   useEffect(() => {
     if (!authData.fetching && authData.isCreated) {
-      push('/');
+      push(LOGIN_ROOT_PATH);
     }
   });
 

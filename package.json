@@ -1,7 +1,7 @@
 {
-  "name": "heavenpay-web",
+  "name": "web-app",
   "version": "1.0.0",
-  "description": "heavenpay web",
+  "description": "web-app",
   "main": "index.js",
   "scripts": {
     "start": "babel-node --max_old_space_size=3072 -- ./node_modules/.bin/webpack-dev-server --config ./webpack.config.dev.js --progress --colors",
